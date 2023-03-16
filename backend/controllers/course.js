@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const Course = require("../models/course");
 
 // Create and Save a new course
@@ -67,8 +68,25 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a course by the id in the request
-exports.update = (req, res) => {};
+// Update a course by the name in the request
+exports.update = (req, res) => {
+  const new_params = req.body;
+  const course_name = req.params.name;
+  Course.update(new_params, { where: { name: course_name } })
+    .then((changes) => {
+      if (changes[0] > 0) {
+        res.send({ message: "Course updated successfully!" });
+      } else {
+        res.send({
+          message: "Something went wrong when updating the course: ",
+          course_name,
+        });
+      }
+    })
+    .catch((err) => {
+      message.status(500).send("Error updating the course: ", err);
+    });
+};
 
 // Delete a course with the specified id in the request
 exports.delete = (req, res) => {};
