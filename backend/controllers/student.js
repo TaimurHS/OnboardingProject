@@ -1,11 +1,100 @@
-const Student = require("../models/student");
+const { where } = require("sequelize");
+const student = require("../models/student");
 
-exports.getStudents = (req, res, next) => {
-  Course.findAll()
-    .then((students) => {
-      console.log("\nSTUDENTS ARE:\n", students);
+// Create and Save a new student
+exports.create = (req, res) => {
+  // Validate request
+  if (!req.body.name) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+    return;
+  }
+
+  // Create a student
+  const student = {
+    name: req.body.name,
+    email: req.body.email,
+    cell_number: req.body.cell_number,
+    age: req.body.age,
+    address: req.body.address,
+  };
+
+  // Save student in the database
+  student
+    .create(student)
+    .then((data) => {
+      res.send(data);
     })
     .catch((err) => {
-      console.log("ERROR:\n", err);
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the student.",
+      });
     });
 };
+
+// Retrieve all students from the database.
+exports.findAll = (req, res) => {
+  // Save student in the database
+  student
+    .findAll()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the student.",
+      });
+    });
+};
+
+// Find a single student with a name
+exports.findOne = (req, res) => {
+  const student_name = req.params.name;
+
+  student
+    .findByPk(student_name)
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find student with name=${student_name}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving student with name=" + student_name,
+      });
+    });
+};
+
+// Update a student by the name in the request
+exports.update = (req, res) => {
+  const new_params = req.body;
+  const student_name = req.params.name;
+  student
+    .update(new_params, { where: { name: student_name } })
+    .then((changes) => {
+      if (changes[0] > 0) {
+        res.send({ message: "student updated successfully!" });
+      } else {
+        res.send({
+          message: "Something went wrong when updating the student: ",
+          student_name,
+        });
+      }
+    })
+    .catch((err) => {
+      message.status(500).send("Error updating the student: ", err);
+    });
+};
+
+// Delete a student with the specified id in the request
+exports.delete = (req, res) => {};
+
+// Delete all students from the database.
+exports.deleteAll = (req, res) => {};
