@@ -47,7 +47,25 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single course with an id
-exports.findOne = (req, res) => {};
+exports.findOne = (req, res) => {
+  const course_name = req.params.name;
+
+  Course.findByPk(course_name)
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find course with name=${course_name}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving course with name=" + course_name,
+      });
+    });
+};
 
 // Update a course by the id in the request
 exports.update = (req, res) => {};

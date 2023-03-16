@@ -9,14 +9,14 @@ module.exports = (app) => {
   // Retrieve all courses
   router.get("/", courses.findAll);
 
-  // Retrieve a single courses with id
-  router.get("/:id", courses.findOne);
+  // Retrieve a single courses with name
+  router.get("/:name", courses.findOne);
 
-  // Update a courses with id
-  router.put("/:id", courses.update);
+  // Update a courses with name
+  router.put("/:name", courses.update);
 
-  // Delete a courses with id
-  router.delete("/:id", courses.delete);
+  // Delete a courses with name
+  router.delete("/:name", courses.delete);
 
   // Delete all courses
   router.delete("/", courses.deleteAll);
