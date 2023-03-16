@@ -32,7 +32,19 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all courses from the database.
-exports.findAll = (req, res) => {};
+exports.findAll = (req, res) => {
+  // Save course in the database
+  Course.findAll()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the course.",
+      });
+    });
+};
 
 // Find a single course with an id
 exports.findOne = (req, res) => {};
