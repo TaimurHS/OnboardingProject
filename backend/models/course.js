@@ -16,7 +16,7 @@ const Course = sequelize.define("courses", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  Lab: {
+  lab: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
