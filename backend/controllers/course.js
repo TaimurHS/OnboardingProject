@@ -46,7 +46,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single course with an id
+// Find a single course with a name
 exports.findOne = (req, res) => {
   const course_name = req.params.name;
 
