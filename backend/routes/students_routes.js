@@ -18,8 +18,5 @@ module.exports = (app) => {
   // Delete a students with name
   router.delete("/:name", students.delete);
 
-  // Assign a course to a student
-  router.put("/:student/:course", students.assignCourse);
-
   app.use("/api/students", router);
 };
