@@ -99,8 +99,20 @@ exports.findOne = (req, res) => {
 // Update a student by the name in the request
 exports.update = (req, res) => {
   const new_params = req.body;
+  const new_courses = req.body.courses;
+
   const student_name = req.params.name;
   Student.update(new_params, { where: { name: student_name } })
+    .then(async (changes) => {
+      await Student_course.destroy({ where: { studentName: student_name } });
+      for (let i = 0; i < new_courses.length; i = i + 1) {
+        await Student_course.create({
+          courseName: new_courses[i],
+          studentName: student_name,
+        });
+      }
+      return changes;
+    })
     .then((changes) => {
       if (changes[0] > 0) {
         res.send({ message: "student updated successfully!" });
