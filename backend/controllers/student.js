@@ -1,5 +1,5 @@
 const { where } = require("sequelize");
-const student = require("../models/student");
+const Student = require("../models/student");
 
 // Create and Save a new student
 exports.create = (req, res) => {
@@ -21,8 +21,7 @@ exports.create = (req, res) => {
   };
 
   // Save student in the database
-  student
-    .create(student)
+  Student.create(student)
     .then((data) => {
       res.send(data);
     })
@@ -37,8 +36,7 @@ exports.create = (req, res) => {
 // Retrieve all students from the database.
 exports.findAll = (req, res) => {
   // Save student in the database
-  student
-    .findAll()
+  Student.findAll()
     .then((data) => {
       res.send(data);
     })
@@ -54,8 +52,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const student_name = req.params.name;
 
-  student
-    .findByPk(student_name)
+  Student.findByPk(student_name)
     .then((data) => {
       if (data) {
         res.send(data);
@@ -76,8 +73,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const new_params = req.body;
   const student_name = req.params.name;
-  student
-    .update(new_params, { where: { name: student_name } })
+  Student.update(new_params, { where: { name: student_name } })
     .then((changes) => {
       if (changes[0] > 0) {
         res.send({ message: "student updated successfully!" });

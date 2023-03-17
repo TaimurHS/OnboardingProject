@@ -26,10 +26,11 @@ sequelize
   });
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to onboarding application." });
 });
 
 require("./routes/courses_routes")(app);
+require("./routes/students_routes")(app);
 
 const PORT = 8080;
 app.listen(PORT, () => {
