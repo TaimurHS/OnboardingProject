@@ -1,6 +1,6 @@
 Notes for future:
 
-1) On the frontend, "Add Student" will populate all fields and send it to the server for processing. These fields will include "Courses", which could either initially be empty, or have courses too ("Courses" is a list of course names - these courses are already registered in the DB beforehand).
+1) On the frontend, "Add Student" will populate all fields and send it to the server for processing. These fields will include "Courses", which could either initially be empty, or have courses too ("Courses" is a list of course names...these courses are already registered in the DB beforehand).
 
 2) On the frontend, "Edit Student" flow will be like this:
   - Get all the details from the backend and display them in text-boxes ('name' textbox should not be editable)
