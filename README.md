@@ -8,3 +8,4 @@ Notes for future:
 
 TO DO:
 1) In the API call that returns a list of all courses, send one more entry in the response. This will be the "enrolled students count". Add this functionality to course.findAll(), by using the course name to find() later and then returning the count...
+2) Do the same for the relevant API call in the student controller
