@@ -18,8 +18,5 @@ module.exports = (app) => {
   // Delete a students with name
   router.delete("/:name", students.delete);
 
-  // Delete all students
-  router.delete("/", students.deleteAll);
-
   app.use("/api/students", router);
 };

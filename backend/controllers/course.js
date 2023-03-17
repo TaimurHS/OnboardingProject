@@ -84,12 +84,29 @@ exports.update = (req, res) => {
       }
     })
     .catch((err) => {
-      message.status(500).send("Error updating the course: ", err);
+      res.status(500).send({
+        message: "Error updating the course: " + err,
+      });
     });
 };
 
 // Delete a course with the specified id in the request
-exports.delete = (req, res) => {};
-
-// Delete all courses from the database.
-exports.deleteAll = (req, res) => {};
+exports.delete = (req, res) => {
+  name_to_del = req.params.name;
+  Course.destroy({ where: { name: name_to_del } })
+    .then((ret) => {
+      if (ret) {
+        res.send({ message: "Course deleted successfully!" });
+      } else {
+        res.send({
+          message: "Something went wrong when deleting the course: ",
+          name_to_del,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error deleting the course: " + err,
+      });
+    });
+};
