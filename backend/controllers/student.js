@@ -1,11 +1,9 @@
-const { where } = require("sequelize");
 const Student = require("../models/student");
 const Student_course = require("../models/Student_course");
 const Course = require("../models/course");
 
 // Create and Save a new student
 exports.create = (req, res) => {
-  let courses_buffer = [];
   // console.log("\n\nHELLOOOO\n\n");
   // Validate request
   if (!req.body.name) {
@@ -15,6 +13,8 @@ exports.create = (req, res) => {
     return;
   }
 
+  let courses = req.body.courses;
+
   // Create a student
   const student = {
     name: req.body.name,
@@ -23,8 +23,6 @@ exports.create = (req, res) => {
     age: req.body.age,
     address: req.body.address,
   };
-
-  let courses = req.body.courses;
 
   // Save student in the database
   Student.create(student)
@@ -99,7 +97,8 @@ exports.findOne = (req, res) => {
 // Update a student by the name in the request
 exports.update = (req, res) => {
   const new_params = req.body;
-  const new_courses = req.body.courses;
+
+  let new_courses = req.body.courses;
 
   const student_name = req.params.name;
   Student.update(new_params, { where: { name: student_name } })
