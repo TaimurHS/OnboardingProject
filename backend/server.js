@@ -2,6 +2,8 @@ const Sequelize = require("sequelize");
 const sequelize = require("./config/config");
 const Course = require("./models/course");
 const Student = require("./models/student");
+const Student_course = require("./models/Student_course");
+
 const express = require("express");
 const cors = require("cors");
 
@@ -14,6 +16,9 @@ var corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+Course.belongsToMany(Student, { through: Student_course });
+Student.belongsToMany(Course, { through: Student_course });
 
 sequelize
   // .sync({ force: true })

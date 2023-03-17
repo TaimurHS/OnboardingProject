@@ -1,8 +1,12 @@
 const { where } = require("sequelize");
 const Student = require("../models/student");
+const Student_course = require("../models/Student_course");
+const Course = require("../models/course");
 
 // Create and Save a new student
 exports.create = (req, res) => {
+  let courses_buffer = [];
+  // console.log("\n\nHELLOOOO\n\n");
   // Validate request
   if (!req.body.name) {
     res.status(400).send({
@@ -20,9 +24,32 @@ exports.create = (req, res) => {
     address: req.body.address,
   };
 
+  let courses = req.body.courses;
+
   // Save student in the database
   Student.create(student)
+    .then(async (data) => {
+      // data needed in the next .then(), so need to return it from this current .then()
+
+      // // this won't be needed if I make a dropdown menu on the frontend to allow to user
+      // // to only chose from available courses
+      // for (let i = 0; i < courses.length; i = i + 1) {
+      //   let course_record = await Course.findByPk(courses[i].name);
+      //   if (course_record) {
+      //     courses_buffer.push(course_record);
+      //   }
+      // }
+
+      for (let i = 0; i < courses.length; i = i + 1) {
+        await Student_course.create({
+          courseName: courses[i],
+          studentName: student.name,
+        });
+      }
+      return data;
+    })
     .then((data) => {
+      console.log(data);
       res.send(data);
     })
     .catch((err) => {
@@ -85,7 +112,7 @@ exports.update = (req, res) => {
       }
     })
     .catch((err) => {
-      message.status(500).send("Error updating the student: ", err);
+      res.status(500).send({ message: "Error updating the student: ", err });
     });
 };
 
