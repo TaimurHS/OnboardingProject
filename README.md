@@ -7,5 +7,4 @@ Notes for future:
   - Send all the details back to the backend when a 'Save' (or similar) button is clicked. This will also send the courses, whether they were changed or not (since all the details are sent). At the backend, the entries in the joint table 'Student_course' (corresponding to the name of the student whose data is being edited) will be deleted, and new entries will be made in this table for this particular student, with the courses now updated.
 
 TO DO:
-1) In the API call that returns a list of all courses, send one more entry in the response. This will be the "enrolled students count". Add this functionality to course.findAll(), by using the course name to find() later and then returning the count...
-2) Do the same for the relevant API call in the student controller
+1) Frontend start
