@@ -1,5 +1,7 @@
 const { where } = require("sequelize");
 const Course = require("../models/course");
+const Student_course = require("../models/Student_course");
+const Student = require("../models/student");
 
 // Create and Save a new course
 exports.create = (req, res) => {
@@ -34,15 +36,44 @@ exports.create = (req, res) => {
 
 // Retrieve all courses from the database.
 exports.findAll = (req, res) => {
-  // Save course in the database
   Course.findAll()
     .then((data) => {
-      res.send(data);
+      const tempFunc = async (data) => {
+        let final_data_to_send = [];
+
+        for (let i = 0; i < data.length; i = i + 1) {
+          let course_students = [];
+          await Student_course.findAll({
+            where: {
+              courseName: data[i].name,
+            },
+          }).then((ret) => {
+            console.log(ret);
+            for (let j = 0; j < ret.length; j = j + 1) {
+              course_students.push(ret[j].studentName);
+            }
+            console.log(course_students);
+            final_data_to_send.push({
+              name: data[i].name,
+              field: data[i].field,
+              credit_hours: data[i].credit_hours,
+              lab: data[i].lab,
+              students: course_students,
+            });
+          });
+        }
+        return final_data_to_send;
+      };
+      let to_send = tempFunc(data);
+      to_send.then((tosend) => {
+        console.log("\nFINAL DATA TO SEND: ", tosend);
+        res.send(tosend);
+      });
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the course.",
+          err.message || "Some error occurred while creating the student.",
       });
     });
 };

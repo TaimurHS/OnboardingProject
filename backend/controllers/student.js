@@ -60,10 +60,40 @@ exports.create = (req, res) => {
 
 // Retrieve all students from the database.
 exports.findAll = (req, res) => {
-  // Save student in the database
   Student.findAll()
     .then((data) => {
-      res.send(data);
+      const tempFunc = async (data) => {
+        let final_data_to_send = [];
+
+        for (let i = 0; i < data.length; i = i + 1) {
+          let student_courses = [];
+          await Student_course.findAll({
+            where: {
+              studentName: data[i].name,
+            },
+          }).then((ret) => {
+            console.log(ret);
+            for (let j = 0; j < ret.length; j = j + 1) {
+              student_courses.push(ret[j].courseName);
+            }
+            console.log(student_courses);
+            final_data_to_send.push({
+              name: data[i].name,
+              email: data[i].email,
+              age: data[i].age,
+              cell_number: data[i].cell_number,
+              address: data[i].address,
+              courses: student_courses,
+            });
+          });
+        }
+        return final_data_to_send;
+      };
+      let to_send = tempFunc(data);
+      to_send.then((tosend) => {
+        console.log("\nFINAL DATA TO SEND: ", tosend);
+        res.send(tosend);
+      });
     })
     .catch((err) => {
       res.status(500).send({
