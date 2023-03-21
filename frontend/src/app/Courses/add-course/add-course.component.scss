@@ -1,0 +1,14 @@
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-radio-button {
+  margin-bottom: 4vh;
+}
+
+.action {
+  button {
+    flex: 1;
+  }
+}

@@ -1,0 +1,52 @@
+<div mat-dialog-title>
+  <h1>Add Course</h1>
+</div>
+
+<form [formGroup]="courseForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content>
+    <div class="column">
+      <mat-form-field appearance="outline">
+        <mat-label>Course Name</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Course Name"
+          formControlName="courseName"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Course Field</mat-label>
+        <mat-select formControlName="courseField">
+          <mat-option *ngFor="let val of fields" [value]="val">{{
+            val
+          }}</mat-option>
+          <!-- <mat-option value="history">History</mat-option>
+        <mat-option value="arts">Arts</mat-option> -->
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Credit Hours</mat-label>
+        <mat-select formControlName="creditHours">
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>
+          <mat-option [value]="4">4</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="mat-radio-button">
+      <mat-label>Does the course have a Lab component?</mat-label>
+      <mat-radio-group aria-label="Select an option" formControlName="lab">
+        <mat-radio-button [value]="1">Yes</mat-radio-button>
+        <mat-radio-button [value]="0">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button>Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Save</button>
+  </div>
+</form>

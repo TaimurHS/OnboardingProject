@@ -5,6 +5,8 @@ const Student = require("../models/student");
 
 // Create and Save a new course
 exports.create = (req, res) => {
+  console.log("\n\n\n");
+  console.log(req.body);
   // Validate request
   if (!req.body.name) {
     res.status(400).send({
