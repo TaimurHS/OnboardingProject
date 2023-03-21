@@ -84,17 +84,41 @@ exports.findOne = (req, res) => {
 
   Course.findByPk(course_name)
     .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find course with name=${course_name}.`,
+      const tempFunc = async (data) => {
+        let final_data_to_send = [];
+
+        let course_students = [];
+        await Student_course.findAll({
+          where: {
+            courseName: data.name,
+          },
+        }).then((ret) => {
+          console.log(ret);
+          for (let j = 0; j < ret.length; j = j + 1) {
+            course_students.push(ret[j].studentName);
+          }
+          console.log(course_students);
+          final_data_to_send.push({
+            name: data.name,
+            field: data.field,
+            credit_hours: data.credit_hours,
+            lab: data.lab,
+            students: course_students,
+          });
         });
-      }
+
+        return final_data_to_send;
+      };
+      let to_send = tempFunc(data);
+      to_send.then((tosend) => {
+        console.log("\nFINAL DATA TO SEND: ", tosend);
+        res.send(tosend);
+      });
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving course with name=" + course_name,
+        message:
+          err.message || "Some error occurred while creating the student.",
       });
     });
 };

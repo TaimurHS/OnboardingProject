@@ -106,20 +106,46 @@ exports.findAll = (req, res) => {
 // Find a single student with a name
 exports.findOne = (req, res) => {
   const student_name = req.params.name;
+  console.log("\n\n\n\n\n\nSTUDENT NAME IS:", student_name);
 
   Student.findByPk(student_name)
     .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find student with name=${student_name}.`,
+      const tempFunc = async (data) => {
+        let final_data_to_send = [];
+
+        let student_courses = [];
+        await Student_course.findAll({
+          where: {
+            studentName: data.name,
+          },
+        }).then((ret) => {
+          console.log(ret);
+          for (let j = 0; j < ret.length; j = j + 1) {
+            student_courses.push(ret[j].courseName);
+          }
+          console.log(student_courses);
+          final_data_to_send.push({
+            name: data.name,
+            email: data.email,
+            age: data.age,
+            cell_number: data.cell_number,
+            address: data.address,
+            courses: student_courses,
+          });
         });
-      }
+
+        return final_data_to_send;
+      };
+      let to_send = tempFunc(data);
+      to_send.then((tosend) => {
+        console.log("\nFINAL DATA TO SEND: ", tosend);
+        res.send(tosend);
+      });
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving student with name=" + student_name,
+        message:
+          err.message || "Some error occurred while creating the student.",
       });
     });
 };
