@@ -8,6 +8,11 @@ import { Observable } from 'rxjs';
 export class CourseService {
   constructor(private _http: HttpClient) {}
 
+  getCourses(): Observable<any> {
+    console.log('\nGetting courses\n');
+    return this._http.get('http://localhost:8080/api/courses');
+  }
+
   addCourse(data: any): Observable<any> {
     console.log('*****DATA*****');
     console.log(data);

@@ -19,6 +19,9 @@ import { MatInput, MatInputModule } from '@angular/material/input';
 import { DataTableComponent } from './Courses/data-table/data-table.component';
 import { AddCourseComponent } from './Courses/add-course/add-course.component';
 import { CoursePageComponent } from './Courses/course-page/course-page.component';
+import { AddStudentComponent } from './Students/add-student/add-student.component';
+import { StudentPageComponent } from './Students/student-page/student-page.component';
+import { StudentDataTableComponent } from './Students/student-data-table/student-data-table.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { CoursePageComponent } from './Courses/course-page/course-page.component
     DataTableComponent,
     AddCourseComponent,
     CoursePageComponent,
+    AddStudentComponent,
+    StudentPageComponent,
+    StudentDataTableComponent,
   ],
   imports: [
     BrowserModule,

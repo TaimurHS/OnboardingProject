@@ -15,6 +15,8 @@ exports.create = (req, res) => {
 
   let courses = req.body.courses;
 
+  console.log("\n\nCOURSES: ", courses);
+
   // Create a student
   const student = {
     name: req.body.name,
