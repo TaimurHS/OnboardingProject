@@ -6,5 +6,5 @@ Notes for future:
   - Get all the details from the backend and display them in text-boxes ('name' textbox should not be editable)
   - Send all the details back to the backend when a 'Save' (or similar) button is clicked. This will also send the courses, whether they were changed or not (since all the details are sent). At the backend, the entries in the joint table 'Student_course' (corresponding to the name of the student whose data is being edited) will be deleted, and new entries will be made in this table for this particular student, with the courses now updated.
 
-TO DO:
-1) Frontend start
+
+! Create course done. Implemented on frontend and integrated with backend...DB updated successfully!
