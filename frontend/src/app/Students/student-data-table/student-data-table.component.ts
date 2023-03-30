@@ -24,6 +24,7 @@ export class StudentDataTableComponent implements OnInit {
     'courses',
     'action',
   ];
+
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -23,4 +23,12 @@ export class CourseService {
       credit_hours: data.creditHours,
     });
   }
+
+  deleteCourse(name: String): Observable<any> {
+    return this._http.delete(`http://localhost:8080/api/courses/${name}`);
+  }
+
+  updateCourse(name: String, data: any): Observable<any> {
+    return this._http.put(`http://localhost:8080/api/courses/${name}`, data);
+  }
 }

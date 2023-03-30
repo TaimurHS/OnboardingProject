@@ -11,13 +11,13 @@
           matInput
           type="text"
           placeholder="Course Name"
-          formControlName="courseName"
+          formControlName="name"
         />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Course Field</mat-label>
-        <mat-select formControlName="courseField">
+        <mat-select formControlName="field">
           <mat-option *ngFor="let val of fields" [value]="val">{{
             val
           }}</mat-option>
@@ -26,7 +26,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Credit Hours</mat-label>
-        <mat-select formControlName="creditHours">
+        <mat-select formControlName="credit_hours">
           <mat-option [value]="2">2</mat-option>
           <mat-option [value]="3">3</mat-option>
           <mat-option [value]="4">4</mat-option>
@@ -37,14 +37,18 @@
     <div class="mat-radio-button">
       <mat-label>Does the course have a Lab component?</mat-label>
       <mat-radio-group aria-label="Select an option" formControlName="lab">
-        <mat-radio-button [value]="1">Yes</mat-radio-button>
-        <mat-radio-button [value]="0">No</mat-radio-button>
+        <mat-radio-button [value]="true">Yes</mat-radio-button>
+        <mat-radio-button [value]="false">No</mat-radio-button>
       </mat-radio-group>
     </div>
   </div>
 
   <div mat-dialog-actions class="action">
-    <button mat-raised-button>Cancel</button>
-    <button mat-raised-button color="primary" type="submit">Save</button>
+    <button mat-raised-button type="button" (click)="cancelForm()">
+      Cancel
+    </button>
+    <button mat-raised-button color="primary" type="submit">
+      {{ data ? "Update" : "Add" }}
+    </button>
   </div>
 </form>
