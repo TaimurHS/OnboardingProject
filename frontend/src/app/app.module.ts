@@ -22,6 +22,10 @@ import { CoursePageComponent } from './Courses/course-page/course-page.component
 import { AddStudentComponent } from './Students/add-student/add-student.component';
 import { StudentPageComponent } from './Students/student-page/student-page.component';
 import { StudentDataTableComponent } from './Students/student-data-table/student-data-table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -47,6 +51,10 @@ import { StudentDataTableComponent } from './Students/student-data-table/student
     MatRadioModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

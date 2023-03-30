@@ -185,7 +185,7 @@ exports.update = (req, res) => {
     });
 };
 
-// Delete a student with the specified id in the request
+// Delete a student with the specified name in the request
 exports.delete = (req, res) => {
   name_to_del = req.params.name;
   Student.destroy({ where: { name: name_to_del } })

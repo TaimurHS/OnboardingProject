@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { StudentService } from './../../services/student.service';
 import { CourseService } from './../../services/course.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DialogRef } from '@angular/cdk/dialog';
 import { FormControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SharedStudentService } from 'src/app/services/shared-student.service';
 
 @Component({
   selector: 'app-add-student',
@@ -18,10 +20,12 @@ export class AddStudentComponent implements OnInit {
     private _fb: FormBuilder,
     private _studentService: StudentService,
     private _courseService: CourseService,
-    private _dialogRef: DialogRef<AddStudentComponent>
+    private _dialogRef: MatDialogRef<AddStudentComponent>,
+    private _sharedStudentService: SharedStudentService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.studentForm = this._fb.group({
-      studentName: '',
+      name: '',
       email: '',
       cell_number: 0,
       age: 0,
@@ -32,6 +36,7 @@ export class AddStudentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCourseOptions();
+    this.studentForm.patchValue(this.data);
   }
 
   getCourseOptions() {
@@ -51,15 +56,39 @@ export class AddStudentComponent implements OnInit {
 
   onFormSubmit() {
     if (this.studentForm.valid) {
-      this._studentService.addStudent(this.studentForm.value).subscribe({
-        next: (val: any) => {
-          alert('Student Added Successfully!');
-          this._dialogRef.close();
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-      });
+      if (this.data) {
+        this._studentService
+          .updateStudent(this.data.name, this.studentForm.value)
+          .subscribe({
+            next: (val: any) => {
+              alert('Student Updated!');
+              this._dialogRef.close();
+              this._sharedStudentService.sendClickEvent();
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+          });
+      } else {
+        this._studentService.addStudent(this.studentForm.value).subscribe({
+          next: (val: any) => {
+            alert('Student Added Successfully!');
+            this._dialogRef.close();
+            this._sharedStudentService.sendClickEvent();
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+        });
+      }
     }
   }
+
+  cancelForm() {
+    this._dialogRef.close();
+  }
+
+  // studentAdded() {
+  //   this._sharedStudentService.sendClickEvent();
+  // }
 }
