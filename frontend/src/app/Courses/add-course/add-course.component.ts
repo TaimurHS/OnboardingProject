@@ -50,6 +50,7 @@ export class AddCourseComponent implements OnInit {
             },
           });
       } else {
+        console.log('\nHEEEEEEEEEEEEEEERRRRRRRRRRRRRRREEEEEEEEEEEEEE\n');
         this._courseService.addCourse(this.courseForm.value).subscribe({
           next: (val: any) => {
             alert('Course Added Successfully!');

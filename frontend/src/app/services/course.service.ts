@@ -17,10 +17,10 @@ export class CourseService {
     console.log('*****DATA*****');
     console.log(data);
     return this._http.post('http://localhost:8080/api/courses/', {
-      name: data.courseName,
-      field: data.courseField,
+      name: data.name,
+      field: data.field,
       lab: data.lab,
-      credit_hours: data.creditHours,
+      credit_hours: data.credit_hours,
     });
   }
 
