@@ -1,7 +1,7 @@
 .page {
   display: flex;
   flex-direction: column;
-  background-color: rgb(233, 68, 68);
+  background-color: #c2185b;
   height: 100%;
 }
 

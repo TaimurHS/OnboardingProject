@@ -37,6 +37,10 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all courses from the database.
+
+// include forms joins
+// require T/F InnerJoin/LeftOuterJoin
+// services on backend...controller only validates data...call service to run queries/BL
 exports.findAll = (req, res) => {
   Course.findAll()
     .then((data) => {
