@@ -1,5 +1,5 @@
 import { StudentService } from './../../services/student.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,7 +13,7 @@ import { AddStudentComponent } from '../add-student/add-student.component';
   templateUrl: './student-data-table.component.html',
   styleUrls: ['./student-data-table.component.scss'],
 })
-export class StudentDataTableComponent implements OnInit {
+export class StudentDataTableComponent implements OnInit, AfterViewInit {
   clickEventsubscription: Subscription;
   displayedColumns: string[] = [
     'name',
@@ -29,6 +29,10 @@ export class StudentDataTableComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
   constructor(
     private _studentService: StudentService,

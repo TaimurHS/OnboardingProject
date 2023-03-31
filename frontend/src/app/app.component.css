@@ -1,10 +1,10 @@
 .page {
   display: flex;
   flex-direction: column;
+  background-color: rgb(233, 68, 68);
+  height: 100%;
 }
 
-.studentpage {
-  display: flex;
-  flex-direction: column;
-  /* margin-top: 2vh; */
+a:active {
+  text-decoration: solid underline;
 }
